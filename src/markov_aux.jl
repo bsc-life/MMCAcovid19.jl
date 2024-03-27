@@ -90,6 +90,10 @@ struct Epidemic_Params
     χᵍ::Array{Float64, 1}
     T::Int64
 
+    # The total number of compartments
+    NumComps::Int64
+    CompLabels::Array{String, 1}
+
     # Compartments evolution
     ρˢᵍ::Array{Float64, 3}
     ρᴱᵍ::Array{Float64, 3}
@@ -176,6 +180,9 @@ function Epidemic_Params(βᴵ::Float64,
                          M::Int64,
                          T::Int64)
 
+    NumComps = 10
+    CompLabels = ["S", "E", "A", "I", "PH", "PD", "HR", "HD", "R", "D"]
+
     # Allocate memory for simulations
     ρˢᵍ  = ones(Float64, G, M, T)
     ρᴱᵍ  = zeros(Float64, G, M, T)
@@ -192,7 +199,7 @@ function Epidemic_Params(βᴵ::Float64,
 
     return Epidemic_Params([βᴵ], [βᴬ], copy(ηᵍ), copy(αᵍ), copy(μᵍ),
                            copy(θᵍ), copy(γᵍ), copy(ζᵍ), copy(λᵍ), copy(ωᵍ),
-                           copy(ψᵍ), copy(χᵍ), T, ρˢᵍ, ρᴱᵍ, ρᴬᵍ, ρᴵᵍ, ρᴾᴴᵍ,
+                           copy(ψᵍ), copy(χᵍ), T, NumComps, CompLabels, ρˢᵍ, ρᴱᵍ, ρᴬᵍ, ρᴵᵍ, ρᴾᴴᵍ,
                            ρᴾᴰᵍ, ρᴴᴿᵍ, ρᴴᴰᵍ, ρᴰᵍ, ρᴿᵍ, CHᵢᵍ, Qᵢᵍ)
 end
 

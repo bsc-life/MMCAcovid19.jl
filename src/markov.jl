@@ -1,3 +1,4 @@
+using Logging
 """
     update_prob!(Pᵢᵍ::Array{Float64, 2},
                  Pᵢᴬᵍ::Array{Float64, 2},
@@ -39,6 +40,7 @@ function update_prob!(Pᵢᵍ::Array{Float64, 2},
     ωᵍ = epi_params.ωᵍ
     ψᵍ = epi_params.ψᵍ
     χᵍ = epi_params.χᵍ
+
     ρˢᵍ = epi_params.ρˢᵍ
     ρᴱᵍ = epi_params.ρᴱᵍ
     ρᴬᵍ = epi_params.ρᴬᵍ
@@ -49,6 +51,7 @@ function update_prob!(Pᵢᵍ::Array{Float64, 2},
     ρᴴᴰᵍ = epi_params.ρᴴᴰᵍ
     ρᴰᵍ = epi_params.ρᴰᵍ
     ρᴿᵍ = epi_params.ρᴿᵍ
+    
     CHᵢᵍ = epi_params.CHᵢᵍ
     G = population.G
     M = population.M
