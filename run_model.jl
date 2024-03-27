@@ -234,23 +234,37 @@ if !isnothing(kappa0_filename)
     κ₀s = κ₀_df.reduction[:]
     # Array of premeabilities of confined households
     ϕs = Float64.(npi_params_dict["ϕs"])
-    ϕs = fill(ϕs[1], length(tᶜs))
-    # if length(tᶜs) != length(ϕs)
-    #     if length(ϕs) == 1
-    #         ϕs = fill(ϕs[1], length(tᶜs))
-    #     else
-    #         #error
-    #         #completar vector con 0 o 1 y lanzar un warning
-    #     end
-    # end
+    if length(tᶜs) != length(ϕs)
+        if length(ϕs) == 1
+            if typeof(ϕs)==Vector{Float64}
+                ϕs = fill(ϕs[1], length(tᶜs))
+            elseif typeof(ϕs)==Float64
+                ϕs = fill(ϕs, length(tᶜs))
+            end              
+        else
+            @warn "- ϕ should be a constant or a time series with same lenght as κ₀"
+            ϕs_aux = ones(Float64, length(tᶜs)-length(ϕs))
+            ϕs = vcat(ϕs, ϕs_aux)
+        end
+    end
 
         
-
-    #ϕs = ones(Float64, length(tᶜs))
     # Array of social distancing measures
     #δs = zeros(Float64, length(tᶜs))
     δs = Float64.(npi_params_dict["δs"])
-    δs = fill(δs[1], length(tᶜs))
+    if length(tᶜs) != length(δs)
+        if length(δs) == 1
+            if typeof(δs)==Vector{Float64}
+                δs = fill(δs[1], length(tᶜs))
+            elseif typeof(δs)==Float64
+                δs = fill(δs, length(tᶜs))
+            end              
+        else
+            @warn "- δ should be a constant or a time series with same lenght as κ₀"
+            δs_aux = zeros(Float64, length(tᶜs)-length(δs))
+            δs = vcat(δs, δs_aux)
+        end
+    end
 else
     # Timesteps when the containment measures will be applied
     tᶜs = Int64.(npi_params_dict["tᶜs"])
